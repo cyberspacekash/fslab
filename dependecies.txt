@@ -4,10 +4,10 @@ chmod +x script.sh
  (executable file)
 
 SCRIPT:
-echo Welcome to File Manipula8on
+echo Welcome to File Manipulation
 echo Enter a file name:
 read filename
-echo Crea8ng file
+echo Creating file
 echo file created successfully!
 touch $filename
 echo "1.View File - V"
@@ -18,26 +18,20 @@ echo "5.Delete File - D"
 echo "6.Exit - E"
 while true;
 do
-echo Enter your choice :
+echo Enter your choice : 
 read choice
 case "$choice" in
- "v") cat $filename
- ;;
- "u") echo new filename:
- read newfile
- mv $filename $newfile
- filename=$newfile
- ;;
- "i") echo enter text:
- read text
- echo $text > $filename
- ;;
- "s") echo Searching....
- ;;
- "d") rm $filename
- ;;
-esac
-done
+	"v") cat  $filename
+	"u") echo new filename:
+		read newfile
+		mv $filename $newfile
+		filename=$newfile
+	"i") echo enter text:
+		read text
+		echo $text > $filename
+	"s") echo Searching....
+	"d") rm $filename
+
 
 # line and word count 
 
@@ -63,6 +57,9 @@ Set up ur account with administrator password
 Install suggested plugins
 Give Ctrl+Z and stop 
 now run ---> java -jar jenkins.war --logfile=/home/USER/jenkins.log  (replace with ur USER, *to track server logs)
+
+To transfer Jenkins server log from local to remote
+scp "jenkins.log" "user@ipaddress":"remotelog.txt"
 
 jenkins.txt (pipeline file) :
 
@@ -98,6 +95,10 @@ class Test
 };
 
 
+(LINUX COMMANDS)
+hostname -I --> ip address
+whoami ---> username
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Q3 SSH REMOTE-LOCAL CONNECTION
@@ -119,8 +120,12 @@ Then run the script file ---> bash script.sh
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+
 #Q4 DOCKER 
 
+
+(!CHANGES!) THERE ARE TWO COMMANDS (sudo snap install docker and sudo apt install docker.io)
 sudo snap install docker.io
 docker build -t myapp .
 
@@ -128,6 +133,7 @@ If u see docker.sock error, cd ../.. (return to base directory)
 cd /var
 cd /run
 sudo chmod 666 docker.sock
+(!CHANGES!) (This can be modified to sudo chmod 666 /var/run/docker.sock)
 
 docker run -d -p 5000:5000 myapp
 
@@ -144,7 +150,45 @@ def hello():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5000)
+(!CHANGES!) (You can add endpoints if u want)
 
+
+CODE2 app.py (GET METHOD): 
+
+from flask import Flask,jsonify
+
+app = Flask(__name__)
+
+students = [
+    {"id":1,"name":"Dennis","age":20,"Major":"Computer Science"},
+    {"id": 2, "name": "Harish", "age": 20, "major": "Mathematics"},
+    {"id": 3, "name": "Badri", "age": 20, "major": "Machine Learning"}
+]
+
+
+@app.route("/")
+def home():
+    return "Hello World"
+
+@app.route("/students",methods=["GET"])
+def getStudents():
+    return jsonify(students)
+
+@app.route("/students/<int:studentId>",methods=["GET"])
+def getStudent(studentId):
+    student=None
+    for i in students:
+        if i["id"]==studentId:
+            student=i
+            break
+    if student!=None:
+        return jsonify(student)
+    else:
+        return jsonify({"error":"Student not found"}),404
+
+
+if __name__=='__main__':
+    app.run("0.0.0.0",5000)
 
 
 Dockerfile:
@@ -174,7 +218,7 @@ CMD ["python", "app.py"]
 requirements.txt:
 
 Flask==2.3.3
-
+Werkzeug==2.3.3
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Q5 VERSION CONTROL
