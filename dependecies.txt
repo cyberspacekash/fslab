@@ -117,6 +117,13 @@ To send file from local to remote: (write this command in a script file--> scrip
 scp "filename_local" "username@ip":"filename_remote"
 Then run the script file ---> bash script.sh
 
+to install SSH(if not present):
+
+sudo apt install openssh-server
+sudo systemctl start ssh
+sudo systemctl enable ssh
+sudo apt install openjdk-17-jdk
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -129,14 +136,21 @@ Then run the script file ---> bash script.sh
 sudo snap install docker.io
 docker build -t myapp .
 
+###############################################################################################
+
 If u see docker.sock error, cd ../.. (return to base directory)
 cd /var
 cd /run
 sudo chmod 666 docker.sock
 (!CHANGES!) (This can be modified to sudo chmod 666 /var/run/docker.sock)
 
-docker run -d -p 5000:5000 myapp
+Another way to solve permission error
+sudo usermod -aG docker$USER
+newgrp docker
 
+################################################################################################
+
+docker run -d -p 5000:5000 myapp
 
 docker tag myapp/app deepsh0203/app:latest
 docker push deepsh0203/app:latest
