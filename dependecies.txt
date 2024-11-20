@@ -116,7 +116,7 @@ Here’s a step-wise guide to set up a Python application with tests using *pyte
 3. *Create a Pipeline Job*:
    - Go to *Jenkins Dashboard > New Item > Pipeline*.
    - Name the job, e.g., GitHub_Webhook_Test_Pipeline.
-
+   - Choose from Build triggers Github hook trigger for GITsce pooling
 ---
 
 #### *2. Create Python Application and Tests*
