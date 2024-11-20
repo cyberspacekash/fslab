@@ -281,5 +281,114 @@ Conflict Resolved and Merged
 git log --oneline
 (To view commits)
 
+#Q6 LOAD BALANCING
+
+app.py:
+
+from flask import Flask, jsonify
+import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return jsonify({
+        "message": "Hello from Flask instance",
+        "instance": os.getenv('INSTANCE_NAME', 'Unknown')
+    })
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
+
+docker-compose.yml:
+
+version: '3.8'
+
+services:
+  flask1:
+    image: flask-app
+    environment:
+      - INSTANCE_NAME=Flask_Instance_1
+    ports:
+      - "5001:5000"
+
+  flask2:
+    image: flask-app
+    environment:
+      - INSTANCE_NAME=Flask_Instance_2
+    ports:
+      - "5002:5000"
+
+  flask3:
+    image: flask-app
+    environment:
+      - INSTANCE_NAME=Flask_Instance_3
+    ports:
+      - "5003:5000"
+
+Dockerfile:
+
+# Use Python as the base image
+FROM python:3.9-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy files to the container
+COPY . .
+
+# Install dependencies
+RUN pip install flask
+
+# Expose the Flask port
+EXPOSE 5000
+
+# Start the Flask app
+CMD ["python", "app.py"]
+
+Commands to run:
+
+sudo apt-get install nginx
+sudo apt-get install apache2-utils
+
+docker build -t flask-app .
+docker-compose up -d
+
+
+nginx.conf:
+
+
+#user  nobody;
+worker_processes  1;
+
+
+#pid        logs/nginx.pid;
+
+
+events {}
+
+http {
+    log_format minimal '$remote_addr $upstream_addr';
+
+    access_log <>;
+create a custom.log file in your folder
+    upstream flask_backend {
+        server localhost:5001;
+        server localhost:5002;
+        server localhost:5003;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://flask_backend;
+        }
+    }
+}
+
+
+
+
 
 
