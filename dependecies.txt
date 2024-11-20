@@ -95,6 +95,10 @@ class Test
 };
 
 ========================================================= JENKINS SRC TO BIN FILE EXCHANGE =============================================
+
+ -- Create a freestyle project and copy these code to windows batch shell
+
+
 FOR WINDOWS:
 
 @echo off
