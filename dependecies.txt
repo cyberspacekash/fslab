@@ -94,6 +94,45 @@ class Test
     }
 };
 
+========================================================= JENKINS SRC TO BIN FILE EXCHANGE =============================================
+FOR WINDOWS:
+
+@echo off
+
+:: Set your project directories
+set SRC_DIR=src
+set BIN_DIR=bin
+
+:: Make sure the bin directory exists
+if not exist %BIN_DIR% mkdir %BIN_DIR%
+
+:: Compile Java files
+javac -d %BIN_DIR% %SRC_DIR%\*.java
+
+:: Optional: Print the contents of the bin directory to see the compiled files
+echo Compiled files:
+dir %BIN_DIR%
+
+
+FOR UBUNTU:
+
+#!/bin/bash
+
+# Set your project directories
+SRC_DIR="src"
+BIN_DIR="bin"
+
+# Make sure the bin directory exists
+mkdir -p $BIN_DIR
+
+# Compile Java files
+javac -d $BIN_DIR $SRC_DIR/*/.java
+
+# Optional: Print the contents of the bin directory to see the compiled files
+echo "Compiled files:"
+ls -l $BIN_DIR
+
+
 ========================================================= JENKINS WITH CI/CD ============================================================
 
 Here’s a step-wise guide to set up a Python application with tests using *pytest, integrate it with Jenkins, and connect it to GitHub webhooks using **ngrok*.
