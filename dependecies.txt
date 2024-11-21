@@ -360,16 +360,6 @@ newgrp docker
 
 ################################################################################################
 
-docker run -d -p 5000:5000 myapp
-
-docker tag myapp/app deepsh0203/app:latest
-docker push deepsh0203/app:latest
-docker pull deepsh0203/app:latest
-
-Incase if Docker push,pull mentioned in question
-deepsh0203 is Dockerhub username, create one for u
-myapp-repo name
-app-image name
 
 
 
